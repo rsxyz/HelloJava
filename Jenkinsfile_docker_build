@@ -1,6 +1,11 @@
 pipeline{
     agent any
-
+    options {
+        timestamps()
+    }
+    environment {
+        IMAGE = "custom-tutum"
+    }
     stages{
         stage('prep') {
             steps {
@@ -14,7 +19,12 @@ pipeline{
         }     
         stage("docker build"){
             steps{
-                 echo "${env.BUILD_ID}-${env.GIT_HASH}"
+                 
+               script {
+                    image = docker.build("${IMAGE}")
+                    image.tag("${env.BUILD_ID}-${env.GIT_HASH}")
+                    println "Newly generated image, " + image.id
+                }
                  }
         }
     }
