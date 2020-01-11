@@ -16,7 +16,6 @@ pipeline{
             steps{
                  echo "${env.BUILD_ID}-${env.GIT_HASH}"
                  }
-            }
         }
     }
 }
