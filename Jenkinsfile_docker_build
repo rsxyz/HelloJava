@@ -6,9 +6,9 @@ pipeline{
             steps {
                 script {
                     env.GIT_HASH = sh(
-                        script: "git rev-parse HEAD').trim().take(7)",
-                        returnStdout: true
-                    ).trim()
+                        returnStdout: true, 
+                        script: 'git rev-parse HEAD'
+                        ).trim().take(7)
                 }
             }
         }     
