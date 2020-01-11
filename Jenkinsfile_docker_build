@@ -4,8 +4,10 @@ pipeline{
     stages{
         stage("docker build"){
             steps{
+                 script{
                  def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
                  echo "${env.BUILD_ID}-${commitHash}"
+                 }
             }
         }
     }
