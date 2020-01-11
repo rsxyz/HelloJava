@@ -2,11 +2,19 @@ pipeline{
     agent any
 
     stages{
+        stage('prep') {
+            steps {
+                script {
+                    env.GIT_HASH = sh(
+                        script: "git rev-parse HEAD').trim().take(7)",
+                        returnStdout: true
+                    ).trim()
+                }
+            }
+        }     
         stage("docker build"){
             steps{
-                 script{
-                 def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
-                 echo "${env.BUILD_ID}-${commitHash}"
+                 echo "${env.BUILD_ID}-${env.GIT_HASH}"
                  }
             }
         }
